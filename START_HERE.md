@@ -50,8 +50,7 @@ What I do:
 
 My toolkit: Python, Requests, BeautifulSoup, Selenium, lxml, Pandas, Regex
 
-Recent work samples:
-https://jechanoo.github.io/portfolio/
+(My portfolio samples are in the Portfolio section below — please check them out.)
 
 Why hire me:
 - Clean, well-documented code — you can maintain it yourself later
