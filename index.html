@@ -713,10 +713,30 @@
         <h2>Get a Free Quote</h2>
         <p class="section-desc">Tell me what you need. I'll respond within 1 hour with a price and timeline.</p>
         <div class="contact-grid">
-            <form class="contact-form" id="orderForm" onsubmit="handleSubmit(event)">
-                <input type="text" placeholder="Your Name *" required>
-                <input type="email" placeholder="Email Address *" required>
-                <select required>
+            <!--
+                CONTACT FORM - Configure your email below:
+                1. Replace YOUR_EMAIL@example.com with your real email
+                2. FormSubmit will email you when clients submit
+                3. Free: 50 submissions/month. No signup needed.
+                First submission: FormSubmit sends a confirmation link to your email.
+                After confirming, all client inquiries arrive in your inbox.
+            -->
+            <form class="contact-form" id="orderForm"
+                  action="https://formsubmit.co/YOUR_EMAIL@example.com"
+                  method="POST"
+                  onsubmit="return handleFormSubmit(event)">
+                <!-- Anti-spam: honeypot -->
+                <input type="text" name="_honey" style="display:none">
+                <!-- Disable captcha for free tier -->
+                <input type="hidden" name="_captcha" value="false">
+                <!-- Email subject line -->
+                <input type="hidden" name="_subject" value="New Client Inquiry - DataForge">
+                <!-- Redirect after submit -->
+                <input type="hidden" name="_next" value="https://jechanoo.github.io/portfolio/thanks.html">
+
+                <input type="text" name="name" placeholder="Your Name *" required>
+                <input type="email" name="email" placeholder="Email Address *" required>
+                <select name="service" required>
                     <option value="">Service Type *</option>
                     <option>Web Scraping</option>
                     <option>Lead Generation</option>
@@ -725,9 +745,9 @@
                     <option>API Development</option>
                     <option>Other</option>
                 </select>
-                <input type="url" placeholder="Website URL (if applicable)">
-                <textarea placeholder="Describe what data you need... *" required></textarea>
-                <button type="submit">Send Request & Get Quote →</button>
+                <input type="url" name="website" placeholder="Website URL (if applicable)">
+                <textarea name="message" placeholder="Describe what data you need... *" required></textarea>
+                <button type="submit" id="submitBtn">Send Request & Get Quote →</button>
                 <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;text-align:center;">
                     No payment required to get a quote. Free sample on first order.
                 </p>
@@ -772,17 +792,13 @@
 </footer>
 
 <script>
-function handleSubmit(e) {
-    e.preventDefault();
-    var btn = e.target.querySelector('button');
-    btn.textContent = 'Request Sent! I\'ll reply within 1 hour.';
-    btn.style.background = '#10b981';
-    // In production: send to email API or form backend
-    setTimeout(function() {
-        btn.textContent = 'Send Request & Get Quote →';
-        btn.style.background = '';
-        e.target.reset();
-    }, 4000);
+function handleFormSubmit(e) {
+    var btn = document.getElementById('submitBtn');
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+    // FormSubmit handles the rest — user will be redirected to thanks.html
+    // If you configured your email, you'll receive the inquiry
+    return true;
 }
 
 // FAQ toggle
