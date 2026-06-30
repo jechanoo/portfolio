@@ -29,6 +29,7 @@ Recent similar work:
 → Lead generator: extracted 500 business contacts from directories
 
 [LINK TO YOUR PORTFOLIO SITE]
+→ https://jechanoo.github.io/portfolio/
 
 Why me:
 ✅ Clean, well-documented code
@@ -39,7 +40,7 @@ Why me:
 I can start immediately. What's the website URL you need scraped?
 
 Best,
-[Your Name]
+Jesse
 ```
 
 ---

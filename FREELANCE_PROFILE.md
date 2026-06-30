@@ -110,7 +110,7 @@ Fast • Accurate • Affordable
 1. 每天花30分钟刷 Upwork 新发布的爬虫/数据录入需求
 2. 前5单不要挑，小单也接（$5 的也做）
 3. 响应速度比价格重要——需求发布15分钟内投递
-4. Cover letter 短：只说 "I can do this. Here's a sample of similar work I've done: [作品网站链接]"
+4. Cover letter 短：只说 "I can do this. Here's a sample of similar work I've done: https://jechanoo.github.io/portfolio/"
 5. 做完后主动问客户 "Anything else you need?"（回头客比新客容易）
 
 ### 哪些单子最好接（新手友好）
