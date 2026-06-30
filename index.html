@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataForge — Web Scraping & Data Solutions</title>
+    <style>
+        :root {
+            --bg: #0a0f1e;
+            --bg2: #111827;
+            --card: #1a2236;
+            --accent: #3b82f6;
+            --accent2: #6366f1;
+            --green: #10b981;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --border: #1e293b;
+            --gradient: linear-gradient(135deg, #3b82f6, #6366f1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,15,30,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 0 2rem;
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--gradient);
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 140px 2rem 100px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: var(--muted);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-badges {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .badge {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59,130,246,0.4);
+        }
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            margin-left: 1rem;
+        }
+        .btn-outline:hover { border-color: var(--accent); }
+
+        /* STATS BAR */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label { color: var(--muted); font-size: 0.85rem; }
+
+        /* SECTIONS */
+        section { padding: 80px 2rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+        section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .section-desc {
+            color: var(--muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* SERVICES GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem; }
+        .card .price {
+            display: inline-block;
+            background: rgba(16,185,129,0.12);
+            color: var(--green);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* PRICING TABLE */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .pricing-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .pricing-card.featured {
+            border-color: var(--accent);
+            background: #151f38;
+            box-shadow: 0 0 40px rgba(59,130,246,0.1);
+        }
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: #fff;
+            padding: 0.2rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .pricing-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .pricing-card .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+        .pricing-card .price-amount small {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        .pricing-card li {
+            padding: 0.5rem 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .pricing-card li::before { content: '\2713 '; color: var(--green); font-weight: 700; }
+
+        /* PORTFOLIO */
+        .project {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .project-body { padding: 2rem; }
+        .project-body h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+        .project-body .project-type {
+            display: inline-block;
+            background: rgba(99,102,241,0.15);
+            color: var(--accent2);
+            padding: 0.15rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .project-body p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tech-tag {
+            background: rgba(59,130,246,0.08);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+        }
+
+        /* PROCESS */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+        .step-num {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(59,130,246,0.15);
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+        }
+        .step h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .step p { color: var(--muted); font-size: 0.88rem; }
+
+        /* TESTIMONIAL */
+        .testimonial {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .testimonial .quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .testimonial .author { color: var(--accent); font-weight: 600; }
+        .testimonial .role { color: var(--muted); font-size: 0.85rem; }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .contact-form textarea { min-height: 120px; resize: vertical; }
+        .contact-form button {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .contact-form button:hover { box-shadow: 0 8px 25px rgba(59,130,246,0.3); }
+        .contact-info .info-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .contact-info .info-icon {
+            font-size: 1.3rem;
+            min-width: 40px;
+            height: 40px;
+            background: var(--card);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+        }
+        .faq-item h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+        .faq-item p { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+        .faq-item.open p { display: block; }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 1.5rem; }
+        }
+
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="logo">DataForge</div>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#process">Process</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <a href="#contact" class="nav-cta">Get a Quote</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>I Turn <span>Website Data</span> Into Clean Spreadsheets</h1>
+    <p>
+        Professional web scraping, data extraction, and automation services.
+        Fast delivery, competitive rates, 100% satisfaction guaranteed.
+    </p>
+    <div class="hero-badges">
+        <span class="badge">Python Scraping</span>
+        <span class="badge">CSV / Excel Output</span>
+        <span class="badge">24h Turnaround</span>
+        <span class="badge">API Integration</span>
+        <span class="badge">Task Automation</span>
+    </div>
+    <a href="#contact" class="btn btn-primary">Start Your Project — $15+</a>
+    <a href="#portfolio" class="btn btn-outline">View Sample Work</a>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-number">3+</div>
+        <div class="stat-label">Years Coding</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Client Satisfaction</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">24h</div>
+        <div class="stat-label">Avg. Response Time</div>
+    </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+    <div class="section-inner">
+        <div class="section-label">What I Do</div>
+        <h2>Services</h2>
+        <p class="section-desc">I extract, transform, and deliver web data — so you can focus on your business.</p>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">&#128269;</div>
+                <h3>Web Scraping & Data Extraction</h3>
+                <p>Extract product listings, pricing, reviews, real estate data, job postings, and more from any website.</p>
+                <span class="price">From $30</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">&#129302;</div>
+                <h3>Lead Generation</h3>
+                <p>Scrape business directories, Google Maps, LinkedIn (public data), and social media for targeted leads.</p>
+                <span class="price">From $40 / 1000 leads</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">&#128202;</div>
+                <h3>Data Cleaning & Processing</h3>
+                <p>Merge, deduplicate, format, and clean messy data. CSV, Excel, JSON — any format in, clean data out.</p>
+                <span class="price">From $15</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">&#9881;</div>
+                <h3>Task Automation</h3>
+                <p>Automate repetitive work: form filling, file organization, report generation, email parsing, and more.</p>
+                <span class="price">From $25</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">&#128279;</div>
+                <h3>API Development & Integration</h3>
+                <p>Build custom APIs, connect services, sync data between platforms. RESTful APIs that just work.</p>
+                <span class="price">From $50</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">&#128188;</div>
+                <h3>E-commerce Monitoring</h3>
+                <p>Track competitor prices, monitor stock levels, get alerts on changes. Stay ahead of the market.</p>
+                <span class="price">From $45 / month</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background: var(--bg2);">
+    <div class="section-inner">
+        <div class="section-label">Pricing</div>
+        <h2>Simple, Transparent Pricing</h2>
+        <p class="section-desc">No hidden fees. Pay only when satisfied. Free sample for first-time clients.</p>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <p style="color:var(--muted);font-size:0.9rem;">For small one-time tasks</p>
+                <div class="price-amount">$15<small>+</small></div>
+                <ul>
+                    <li>Up to 100 data items</li>
+                    <li>1 website source</li>
+                    <li>CSV output</li>
+                    <li>3-day delivery</li>
+                    <li>Basic error handling</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width:100%;">Get Started</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Professional</h3>
+                <p style="color:var(--muted);font-size:0.9rem;">Most popular for businesses</p>
+                <div class="price-amount">$45<small>+</small></div>
+                <ul>
+                    <li>Up to 1,000 data items</li>
+                    <li>Multiple pages & websites</li>
+                    <li>CSV + Excel output</li>
+                    <li>1-2 day delivery</li>
+                    <li>Data cleaning included</li>
+                    <li>Error recovery & retry</li>
+                    <li>7-day free support</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width:100%;">Get Started</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <p style="color:var(--muted);font-size:0.9rem;">For large-scale needs</p>
+                <div class="price-amount">$100<small>+</small></div>
+                <ul>
+                    <li>Unlimited data volume</li>
+                    <li>Unlimited websites</li>
+                    <li>All formats (CSV/Excel/JSON/API)</li>
+                    <li>Priority 12-24h delivery</li>
+                    <li>Advanced data cleaning</li>
+                    <li>Scheduled recurring runs</li>
+                    <li>Dashboard/reports</li>
+                    <li>30-day support</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width:100%;">Get Started</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+    <div class="section-inner">
+        <div class="section-label">My Work</div>
+        <h2>Sample Projects</h2>
+        <p class="section-desc">Real code, real results. Each project includes source code you can inspect.</p>
+
+        <div class="project">
+            <div class="project-body">
+                <span class="project-type">Web Scraping</span>
+                <h3>E-commerce Product Scraper</h3>
+                <p>Full-featured Python scraper that extracts product names, prices, ratings, and availability from e-commerce sites. Handles pagination, rate limiting, and error recovery. Outputs clean CSV and JSON files ready for Excel or database import.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python 3</span>
+                    <span class="tech-tag">lxml</span>
+                    <span class="tech-tag">XPath</span>
+                    <span class="tech-tag">CSV Export</span>
+                    <span class="tech-tag">Error Recovery</span>
+                    <span class="tech-tag">Rate Limiting</span>
+                    <span class="tech-tag">Retry Logic</span>
+                </div>
+                <p style="margin-top:0.8rem;">
+                    <a href="https://github.com/YOUR_USERNAME/portfolio/blob/main/sample-project/scraper.py" style="color:var(--accent);">View Source Code →</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-body">
+                <span class="project-type">Lead Generation</span>
+                <h3>Google Maps Business Extractor</h3>
+                <p>Extracts business names, addresses, phone numbers, websites, and ratings from Google Maps search results. Built with Python and Selenium for dynamic content handling. Ideal for B2B lead generation and market research.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Selenium</span>
+                    <span class="tech-tag">Google Maps API</span>
+                    <span class="tech-tag">Regex</span>
+                    <span class="tech-tag">Excel Export</span>
+                    <span class="tech-tag">Anti-Detection</span>
+                </div>
+                <p style="margin-top:0.8rem;">
+                    <a href="https://github.com/YOUR_USERNAME/portfolio/blob/main/sample-project/maps_scraper.py" style="color:var(--accent);">View Source Code →</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-body">
+                <span class="project-type">Automation</span>
+                <h3>Bulk File Organizer & Renamer</h3>
+                <p>Command-line automation tool that renames, sorts, and organizes thousands of files by pattern matching. Extracts dates, categories, and metadata from filenames. Cross-platform (Windows/Mac/Linux).</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python CLI</span>
+                    <span class="tech-tag">Regex</span>
+                    <span class="tech-tag">File I/O</span>
+                    <span class="tech-tag">Cross-Platform</span>
+                    <span class="tech-tag">Batch Processing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" style="background: var(--bg2);">
+    <div class="section-inner">
+        <div class="section-label">How It Works</div>
+        <h2>Simple 4-Step Process</h2>
+        <p class="section-desc">From request to delivery — clear, fast, and hassle-free.</p>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-num">01</div>
+                <h4>You Describe Your Needs</h4>
+                <p>Share the website URL and what data you need. I'll review and respond within 1 hour with a quote.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <h4>I Build the Scraper</h4>
+                <p>I develop the custom scraper with error handling, rate limiting, and data cleaning built in.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">03</div>
+                <h4>You Review the Sample</h4>
+                <p>I deliver a free sample of the first 20 rows. You approve the format before full delivery.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">04</div>
+                <h4>Full Delivery + Support</h4>
+                <p>You receive the complete dataset. Free revisions for 7 days. Pay only when satisfied.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section>
+    <div class="section-inner">
+        <div class="testimonial">
+            <p class="quote">"Delivered exactly what I needed — clean product data from 50+ pages, on time and under budget. Will hire again."</p>
+            <p class="author">— E-commerce Business Owner</p>
+            <p class="role">Upwork Client</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section style="background: var(--bg2);">
+    <div class="section-inner">
+        <div class="section-label">FAQ</div>
+        <h2>Common Questions</h2>
+        <div class="faq-item open">
+            <h4>What websites can you scrape?</h4>
+            <p>Any publicly accessible website. E-commerce sites, directories, real estate platforms, job boards, social media (public data only). I follow each site's robots.txt and legal terms.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How long does a typical project take?</h4>
+            <p>Small projects (under 500 items): 1-2 days. Medium projects (500-5000 items): 2-4 days. Large projects: timeline discussed case by case.</p>
+        </div>
+        <div class="faq-item">
+            <h4>What format do I get the data in?</h4>
+            <p>CSV (opens in Excel/Google Sheets), Excel (.xlsx), JSON, or any format you need. Data is cleaned, deduplicated, and ready to use.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Is web scraping legal?</h4>
+            <p>Scraping publicly available data is generally legal. I only scrape public data, respect robots.txt, and never access login-protected content without authorization.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-inner">
+        <div class="section-label">Start a Project</div>
+        <h2>Get a Free Quote</h2>
+        <p class="section-desc">Tell me what you need. I'll respond within 1 hour with a price and timeline.</p>
+        <div class="contact-grid">
+            <form class="contact-form" id="orderForm" onsubmit="handleSubmit(event)">
+                <input type="text" placeholder="Your Name *" required>
+                <input type="email" placeholder="Email Address *" required>
+                <select required>
+                    <option value="">Service Type *</option>
+                    <option>Web Scraping</option>
+                    <option>Lead Generation</option>
+                    <option>Data Cleaning</option>
+                    <option>Task Automation</option>
+                    <option>API Development</option>
+                    <option>Other</option>
+                </select>
+                <input type="url" placeholder="Website URL (if applicable)">
+                <textarea placeholder="Describe what data you need... *" required></textarea>
+                <button type="submit">Send Request & Get Quote →</button>
+                <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;text-align:center;">
+                    No payment required to get a quote. Free sample on first order.
+                </p>
+            </form>
+            <div class="contact-info">
+                <div class="info-item">
+                    <div class="info-icon">&#9200;</div>
+                    <div>
+                        <strong>Fast Response</strong>
+                        <p style="color:var(--muted);font-size:0.9rem;">I reply within 1 hour during business hours (GMT+8, 9AM-10PM)</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">&#128176;</div>
+                    <div>
+                        <strong>Risk-Free</strong>
+                        <p style="color:var(--muted);font-size:0.9rem;">Free sample before full payment. Pay only when satisfied.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">&#128274;</div>
+                    <div>
+                        <strong>Secure & Confidential</strong>
+                        <p style="color:var(--muted);font-size:0.9rem;">Your data and requirements are kept strictly confidential.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">&#127758;</div>
+                    <div>
+                        <strong>Available Worldwide</strong>
+                        <p style="color:var(--muted);font-size:0.9rem;">Working remotely with clients globally via Upwork & Fiverr.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 DataForge. Built to deliver, not just look good.</p>
+    <p style="margin-top:0.5rem;">Available on <a href="#" style="color:var(--accent);">Upwork</a> &middot; <a href="#" style="color:var(--accent);">Fiverr</a></p>
+</footer>
+
+<script>
+function handleSubmit(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    btn.textContent = 'Request Sent! I\'ll reply within 1 hour.';
+    btn.style.background = '#10b981';
+    // In production: send to email API or form backend
+    setTimeout(function() {
+        btn.textContent = 'Send Request & Get Quote →';
+        btn.style.background = '';
+        e.target.reset();
+    }, 4000);
+}
+
+// FAQ toggle
+document.querySelectorAll('.faq-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+        this.classList.toggle('open');
+    });
+});
+</script>
+
+</body>
+</html>

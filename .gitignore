@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output files (samples kept for demo)
+*.csv
+*.json
+!sample-project/products_demo.csv
+!sample-project/products_demo.json
+!sample-project/leads_sample.csv
+!sample-project/leads_sample.json
+
+# logs
+*.log
