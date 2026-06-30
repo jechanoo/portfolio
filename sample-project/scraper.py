@@ -236,7 +236,7 @@ class EcommerceScraper:
 if __name__ == '__main__':
     print("=" * 55)
     print("  E-COMMERCE PRODUCT SCRAPER - LIVE DEMO")
-    print("  By [Your Name] | Upwork/Fiverr Portfolio")
+    print("  By Jesse | Upwork/Fiverr Portfolio")
     print("=" * 55)
 
     scraper = EcommerceScraper(delay_min=0.5, delay_max=1.5)

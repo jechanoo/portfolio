@@ -322,7 +322,7 @@ if __name__ == '__main__':
     print("""
     =========================================================
       GOOGLE MAPS LEAD EXTRACTOR - DEMO MODE
-      [Your Name] | Upwork/Fiverr Portfolio Sample
+      Jesse | Upwork/Fiverr Portfolio Sample
     =========================================================
 
     In production, this tool uses Selenium WebDriver to extract
