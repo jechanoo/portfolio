@@ -31,6 +31,7 @@ Fast delivery, competitive rates. Available for hire on Upwork & Fiverr.
 - Available on Upwork & Fiverr
 - Response time: < 1 hour
 - Free sample on first order
+- Live site: https://jechanoo.github.io/portfolio/
 
 ---
 
